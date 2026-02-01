@@ -2,7 +2,7 @@
     "name": "jet-set-combos",
     "displayName": "Jet Set Combos",
     "publisher": "pelmeshke",
-    "description": "Jet Set Combos🚀 is a Visual Studio Code extension that plays combo sound effects from the 2000 game *Jet Set Radio* when you type code continuously🤟🤟🤟",
+    "description": "Jet Set Combos🚀 is an extension that plays combo sound effects from Jet Set Radio when you type code continuously🤟🤟🤟",
     "repository": {
         "url": "https://github.com/pelmesh619/jet-set-combos.git"
     },
