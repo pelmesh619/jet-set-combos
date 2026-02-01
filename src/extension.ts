@@ -57,9 +57,10 @@ async function incrementVolume() {
     if (config.volume === 110) {
         vscode.window.showWarningMessage('[Jet Set Combos] Combos are already at maximum volume');
         config.volume = 100;
+    } else {
+        vscode.window.showInformationMessage('[Jet Set Combos] Volume was raised to ' + config.volume);
     }
 
-    vscode.window.showInformationMessage('[Jet Set Combos] Volume was raised to ' + config.volume);
     await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume, true);
 }
 
