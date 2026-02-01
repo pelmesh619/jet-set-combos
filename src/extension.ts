@@ -41,65 +41,64 @@ export async function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    vscode.commands.registerCommand('jet-set-combos.volumeUp', async () => {
-        config.volume += 10;
-
-        if (config.volume === 110) {
-            vscode.window.showWarningMessage('[Jet Set Combos] Combos are already at maximum volume');
-            config.volume = 100;
-        }
-
-        await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume);
-        vscode.window.showInformationMessage('[Jet Set Combos] Volume was raised to ' + config.volume);
-    });
-
-    vscode.commands.registerCommand('jet-set-combos.volumeDown', async () => {
-        config.volume -= 10;
-
-        if (config.volume === -9) {
-            vscode.window.showWarningMessage('[Jet Set Combos] Combos are already at minimum volume');
-            config.volume = 1;
-        }
-
-        await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume);
-        vscode.window.showInformationMessage('[Jet Set Combos] Volume lowered to ' + config.volume);
-    });
-
-    vscode.commands.registerCommand('jet-set-combos.setVolume', async () => {
-        let input = await vscode.window.showInputBox()
-        let newVolume = toInteger(input);
-
-        if (newVolume >= 100) {
-            vscode.window.showInformationMessage("[Jet Set Combos] Volume is increased to maximum")
-            config.volume = 100;
-        }
-        else if (newVolume <= 1) {
-            vscode.window.showInformationMessage("[Jet Set Combos] Volume is decreased to minimum")
-            config.volume = 1;
-        } else {
-            if (config.volume < newVolume)
-                vscode.window.showInformationMessage("[Jet Set Combos] Volume is increased to " + newVolume)
-            else if (config.volume > newVolume)
-                vscode.window.showInformationMessage("[Jet Set Combos] Volume is decreased to " + newVolume)
-            else
-                vscode.window.showInformationMessage("[Jet Set Combos] Volume is already at " + newVolume);
-
-            config.volume = newVolume;
-        }
-
-        await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume);
-    });
-
-    vscode.commands.registerCommand(
-        'jet-set-combos.selectAudioDevice',
-        () => selectAudioDevice(context)
-    );
+    vscode.commands.registerCommand('jet-set-combos.volumeUp', incrementVolume);
+    vscode.commands.registerCommand('jet-set-combos.volumeDown', decrementVolume);
+    vscode.commands.registerCommand('jet-set-combos.setVolume', setVolume);
+    vscode.commands.registerCommand('jet-set-combos.selectAudioDevice', selectAudioDevice);
 
     context.subscriptions.push(listener);
 }
 
 export function deactivate() { }
 
+async function incrementVolume() {
+    config.volume += 10;
+
+    if (config.volume === 110) {
+        vscode.window.showWarningMessage('[Jet Set Combos] Combos are already at maximum volume');
+        config.volume = 100;
+    }
+
+    await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume);
+    vscode.window.showInformationMessage('[Jet Set Combos] Volume was raised to ' + config.volume);
+}
+
+async function decrementVolume() {
+    config.volume += 10;
+
+    if (config.volume === 110) {
+        vscode.window.showWarningMessage('[Jet Set Combos] Combos are already at maximum volume');
+        config.volume = 100;
+    }
+
+    await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume);
+    vscode.window.showInformationMessage('[Jet Set Combos] Volume was raised to ' + config.volume);
+}
+
+async function setVolume() {
+    let input = await vscode.window.showInputBox();
+    let newVolume = toInteger(input);
+
+    if (newVolume >= 100) {
+        vscode.window.showInformationMessage("[Jet Set Combos] Volume is increased to maximum")
+        config.volume = 100;
+    }
+    else if (newVolume <= 1) {
+        vscode.window.showInformationMessage("[Jet Set Combos] Volume is decreased to minimum")
+        config.volume = 1;
+    } else {
+        if (config.volume < newVolume)
+            vscode.window.showInformationMessage("[Jet Set Combos] Volume is increased to " + newVolume)
+        else if (config.volume > newVolume)
+            vscode.window.showInformationMessage("[Jet Set Combos] Volume is decreased to " + newVolume)
+        else
+            vscode.window.showInformationMessage("[Jet Set Combos] Volume is already at " + newVolume);
+
+        config.volume = newVolume;
+    }
+
+    await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume);
+}
 
 export class EditorListener {
     private _soundDirectory: string = path.join(__dirname, '..', 'sounds');
@@ -207,7 +206,7 @@ interface AudioDevicePick extends vscode.QuickPickItem {
 	index: number;
 }
 
-async function selectAudioDevice(context: vscode.ExtensionContext) {
+async function selectAudioDevice() {
     if (process.platform !== 'win32') {
         vscode.window.showErrorMessage('[Jet Set Combos] Choosing between audio devices is available only on Windows');
         return;
