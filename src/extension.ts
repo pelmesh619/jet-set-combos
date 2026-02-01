@@ -172,6 +172,8 @@ export class EditorListener {
         }, 1500);
 
         if (this._comboCount >= 50 && this._comboPlayed == 7) {
+            this._comboCount = -10;
+            this._comboPlayed = 0;
             this.play(this._comboSuper);
             this._comboPlayed += 1;
         } else if (this._comboCount >= 40 && this._comboPlayed == 6) {
