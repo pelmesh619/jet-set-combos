@@ -65,14 +65,15 @@ async function incrementVolume() {
 }
 
 async function decrementVolume() {
-    config.volume += 10;
+    config.volume -= 10;
 
-    if (config.volume === 110) {
-        vscode.window.showWarningMessage('[Jet Set Combos] Combos are already at maximum volume');
-        config.volume = 100;
+    if (config.volume === 1 - 10) {
+        vscode.window.showWarningMessage('[Jet Set Combos] Combos are already at minimum volume');
+        config.volume = 1;
+    } else {
+        vscode.window.showInformationMessage('[Jet Set Combos] Volume was decreased to ' + config.volume);
     }
 
-    vscode.window.showInformationMessage('[Jet Set Combos] Volume was raised to ' + config.volume);
     await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume, true);
 }
 
