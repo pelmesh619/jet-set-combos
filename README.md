@@ -3,7 +3,8 @@
 Jet Set Combos🚀 is a Visual Studio Code extension that plays combo sound effects from the 2000 game *Jet Set Radio* when you type code continuously🤟🤟🤟
 
 > [!NOTE]
-> This extension is currently supported only on **Windows (x86-64)**
+> This extension is currently supported only on **Windows (x86-64)**  
+> However you can build it by yourself, check build section
 
 ## Features
 
