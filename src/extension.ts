@@ -25,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     vscode.commands.registerCommand('jet-set-combos.enable', async () => {
         if (!await isActive()) {
-            await vscode.workspace.getConfiguration('jet-set-combos').update('enable', true);
+            await vscode.workspace.getConfiguration('jet-set-combos').update('enable', true, true);
             vscode.window.showInformationMessage('[Jet Set Combos] Combos are enabled');
         } else {
             vscode.window.showWarningMessage('[Jet Set Combos] Combos was already enabled');
@@ -34,7 +34,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     vscode.commands.registerCommand('jet-set-combos.disable', async () => {
         if (await isActive()) {
-            await vscode.workspace.getConfiguration('jet-set-combos').update('enable', false);
+            await vscode.workspace.getConfiguration('jet-set-combos').update('enable', false, true);
             vscode.window.showInformationMessage('[Jet Set Combos] Combos are disabled');
         } else {
             vscode.window.showWarningMessage('[Jet Set Combos] Combos was already disabled');
@@ -59,8 +59,8 @@ async function incrementVolume() {
         config.volume = 100;
     }
 
-    await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume);
     vscode.window.showInformationMessage('[Jet Set Combos] Volume was raised to ' + config.volume);
+    await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume, true);
 }
 
 async function decrementVolume() {
@@ -71,8 +71,8 @@ async function decrementVolume() {
         config.volume = 100;
     }
 
-    await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume);
     vscode.window.showInformationMessage('[Jet Set Combos] Volume was raised to ' + config.volume);
+    await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume, true);
 }
 
 async function setVolume() {
@@ -97,7 +97,7 @@ async function setVolume() {
         config.volume = newVolume;
     }
 
-    await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume);
+    await vscode.workspace.getConfiguration('jet-set-combos').update('volume', config.volume, true);
 }
 
 export class EditorListener {
