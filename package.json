@@ -1,0 +1,112 @@
+{
+    "name": "jet-set-combos",
+    "displayName": "Jet Set Combos",
+    "description": "",
+    "repository": {
+        "url": "https://github.com/pelmesh619/jet-set-combos.git"
+    },
+    "version": "0.1.0",
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "files": [
+        "dist",
+        "players"
+    ],
+    "main": "./dist/extension.js",
+    
+    "contributes": {
+        "configuration": {
+            "title": "Jet Set Combos",
+            "properties": {
+                "jet-set-combos.enable": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable this extension"
+                },
+                "jet-set-combos.volume": {
+                    "type": "number",
+                    "default": 100,
+                    "description": "Volume (1 is minimum, 100 is maximum)"
+                },
+                "jet-set-combos.audioDevice": {
+                    "type": "number",
+                    "default": -1,
+                    "description": "[Only in Windows] Audio output device index (-1 is system default)"
+                },
+                "jet-set-combos.disablePasteSFX": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Disable paste sound effect"
+                },
+                "jet-set-combos.disableCutSFX": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Disable cut sound effect"
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "jet-set-combos.setVolume",
+                "title": "[Jet Set Combos] Set volume to a specific value from 1 to 100"
+            },
+            {
+                "command": "jet-set-combos.volumeUp",
+                "title": "[Jet Set Combos] Increase volume by 10"
+            },
+            {
+                "command": "jet-set-combos.volumeDown",
+                "title": "[Jet Set Combos] Decrease volume by 10"
+            },
+            {
+                "command": "jet-set-combos.enable",
+                "title": "[Jet Set Combos] Enable Jet Set Radio Combos"
+            },
+            {
+                "command": "jet-set-combos.disable",
+                "title": "[Jet Set Combos] Disable Jet Set Radio Combos"
+            },
+            {
+                "command": "jet-set-combos.selectAudioDevice",
+                "title": "[Jet Set Combos] Select Audio Device"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run package",
+        "compile": "webpack",
+        "watch": "webpack --watch",
+        "package": "webpack --mode production --devtool hidden-source-map",
+        "compile-tests": "tsc -p . --outDir out",
+        "watch-tests": "tsc -p . -w --outDir out",
+        "pretest": "npm run compile-tests && npm run compile && npm run lint",
+        "lint": "eslint src",
+        "test": "vscode-test"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.17.23",
+        "@types/lodash.debounce": "^4.0.9",
+        "@types/mocha": "^10.0.10",
+        "@types/node": ">=25.0.0",
+        "@types/vscode": "^1.70.0",
+        "@vscode/test-cli": "^0.0.12",
+        "@vscode/test-electron": "^2.5.2",
+        "eslint": "^9.39.2",
+        "ts-loader": "^9.5.4",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.52.0",
+        "webpack": "^5.104.1",
+        "webpack-cli": "^6.0.1"
+    },
+    "dependencies": {
+        "lodash": "^4.17.23",
+        "lodash.debounce": "^4.0.8"
+    }
+}
