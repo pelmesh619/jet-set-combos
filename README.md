@@ -98,6 +98,15 @@ Now you got a .vsix file that you can install in Visual Studio Code's extensions
 ```bash
 code --install-extension jet-set-combos-0.1.0.vsix
 ```
+
+## License
+
+This project is licensed under the MIT License. That means that the source code of the extension is open-source and can be used, modified, and distributed under the terms of the MIT License
+
+Jet Set Radio and its sound effects are the property of SEGA. Sound effects included in this project are used for non-commercial and *fan* purposes only. This project is not affiliated with or endorsed by SEGA
+
+If you are a rights holder and believe that any content in this repository should be removed or changed, please open an issue or contact the repository owner
+
 ## Release Notes
 
 ### 0.1.0
