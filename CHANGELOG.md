@@ -11,3 +11,6 @@
 - Shortened the extension description
 - Combo sounds no longer stop while typing continuously
 
+### 1.0
+
+- Added support for Linux and macOS

@@ -125,3 +125,7 @@ If you are a rights holder and believe that any content in this repository shoul
 - Fixed a bug where the decrease volume command increased volume instead
 - Shortened the extension description
 - Combo sounds no longer stop while typing continuously
+
+### 1.0
+
+- Added support for Linux and macOS
