@@ -10,17 +10,47 @@ export interface PlayerConfig {
 
 export default {
     play(filePath: string, config: PlayerConfig) : Promise<void> {
-        return new Promise ((resolve, reject) => {
+        return new Promise((resolve) => {
             switch (process.platform) {
-                case 'win32': 
-                    cp.execFile(_playerWindowsPath, [filePath, config.volume / 100, config.deviceNumber]);
+                case 'win32': {
+                    console.log(_playerWindowsPath, [filePath, config.volume / 100, config.deviceNumber])
+                    const child = cp.spawn(_playerWindowsPath, [filePath, config.volume / 100, config.deviceNumber]);
+
+                    child.on('error', (err: Error) => {
+                        console.log('[Jet Set Combos] Failed to play sound via playsound.exe:', err.message);
+                    });
                     resolve();
                     break;
-                case 'darwin':
-                case 'linux': 
-                default:
+                }
+                case 'darwin': {
+                    const volume = Math.max(0, Math.min(100, config.volume || 100)) / 100;
+                    const child = cp.spawn('afplay', ['-v', volume.toString(), filePath]);
+
+                    child.on('error', (err: Error) => {
+                        console.log('[Jet Set Combos] Failed to play sound via afplay:', err.message);
+                    });
+
+                    resolve();
+                    break;
+                }
+                case 'linux': {
+                    const safeVolume = Math.max(0, Math.min(100, config.volume || 100));
+                    const pulseVolume = Math.round((safeVolume / 100) * 65536);
+                    const args = [`--volume=${pulseVolume}`, filePath];
+                    const child = cp.spawn('paplay', args);
+
+                    child.on('error', (err: Error) => {
+                        console.log('[Jet Set Combos] Failed to play sound via paplay:', err.message);
+                    });
+
+                    resolve();
+                    break;
+                }
+                default: {
                     console.log('This platform (' + process.platform + ') is not supported');
-                    return;
+                    resolve();
+                    break;
+                }
             }
         });
     },
